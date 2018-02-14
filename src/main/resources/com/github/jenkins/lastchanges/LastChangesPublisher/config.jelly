@@ -1,0 +1,89 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:f="/lib/form">
+
+  <f:section title="Last Changes Configuration" >
+
+       <f:entry title="Since" description="Since when changes from current revision will be 'diffed'. Default is 'previous revision'. Note that this field will be ignored if 'SpecificRevision' or 'SpecificBuild' is provided." >
+                <f:select value="${instance.since}" field="since" default="PREVIOUS_REVISION" />
+       </f:entry>
+       <f:entry title="Specific revision" description="Revision id to create the diff with the current repository revision." >
+             <f:textbox value="${instance.specificRevision}" field="specificRevision"  />
+       </f:entry>
+       <f:entry title="Specific build" description="Compare current repository revision with the revision of a specific build." >
+             <f:textbox value="${instance.specificBuild}" field="specificBuild"  />
+       </f:entry>
+       <f:section title="Advanced Options">
+             <f:advanced>
+              <f:entry title="Format" field="format" description="Diff format: libe-by-line (default) or side-by-side.">
+                    <f:select value="${instance.format}" field="format" />
+               </f:entry>
+               <f:entry title="Matching" field="matching" description="Matching level: 'lines' for matching lines, 'words' for matching lines and words or 'none', default is none.">
+                    <f:select value="${instance.matching}"  field="matching" />
+               </f:entry>
+               <f:entry  title="Show files" description="Show a file list before the diff.">
+                   <f:checkbox value="${instance.showFiles}" field="showFiles" default="true"/>
+               </f:entry>
+
+               <f:entry  title="Synchronised scroll" description="Scroll both panes in side-by-side mode.">
+                   <f:checkbox value="${instance.synchronisedScroll}"  field="synchronisedScroll" default="true"/>
+               </f:entry>
+
+               <f:entry title="Match words threshold" description="Similarity threshold for word matching." >
+                   <f:textbox value="${instance.matchWordsThreshold}" field="matchWordsThreshold" default="0.25" />
+                </f:entry>
+
+                <f:entry title="Matching max comparisons" description="Perform at most this much comparisons for line matching a block of changes." >
+                   <f:textbox value="${instance.matchingMaxComparisons}" field="matchingMaxComparisons" default="1000" />
+                </f:entry>
+                <f:entry title="VCS directory" description="Directory, relative to workspace, to search (recursively) for the VCS directory (.git or .svn). Default is workspace root directory" >
+                   <f:textbox value="${instance.vcsDir}" field="vcsDir"  />
+                </f:entry>
+            </f:advanced>
+        </f:section>
+        
+        <f:section title="QA Automation Configuration">     		
+       			
+       			<f:entry  title="Trigger QA Job" description="Triggers QA Automation Job if enabled">
+           			<f:checkbox value="${instance.triggerQAJob}" field="triggerQAJob" default = "true"/>           			
+       			</f:entry>
+				
+				<f:entry title="Trigger Server" description="Which Jenkins server to be used for triggering the QA Job. Please enter remote jenkins URL if Remote server. URL is not required for same server" >
+                	<f:select value="${instance.triggerServer}" field="triggerServer" default="SAME_SERVER" />
+       			</f:entry>       							
+				       			
+       			<f:entry title="Trigger Job based on" description="Trigger based on the Controller file change or Commit Message(JIRA ID)" >
+                	<f:select value="${instance.triggerType}" field="triggerType" default="COMMIT_MESSAGE" />
+       			</f:entry>       			
+    			
+       			<f:section title="Remote Jenkins">
+             		<f:advanced>
+		       			<f:entry  title="Jenkins URL" description="Base URL of Remote Jenkins ex: http://localhost:8080. Please level it empty for Same Server configuration">
+		          			<f:textbox value="${instance.remoteJenkinsBaseUrl}" field="remoteJenkinsBaseUrl" />          			
+		      			</f:entry>
+		      			<f:entry  title="UserName" description="Username to be used for Remote Jenkins">
+		          			<f:textbox value="${instance.remoteUserName}" field="remoteUsername" />          			
+		      			</f:entry>
+		      			<f:entry  title="API Token" description="API Token to be used for Remote Jenkins">
+		          			<f:textbox value="${instance.remoteApiToken}" field="remoteApiToken" />          			
+		      			</f:entry>
+		      			
+		      			<f:validateButton title="Validate Address" method="validateAddress" with="remoteJenkinsBaseUrl,remoteUserName,remoteApiToken" />
+               		</f:advanced>
+               	</f:section>
+       			
+       			<f:section title = "">
+	       			<f:entry title="Default QA Job" description="Default QA Job to be run if no job is associated with code change in the build" >
+	             		<f:textbox value="${instance.defaultQaJob}" field="defaultQaJob"  />             		
+	       			</f:entry>
+	       			<f:validateButton title="Validate If Job exists" method="validateJob" with="remoteJenkinsBaseUrl,remoteUserName,remoteApiToken,defaultQaJob" />     		
+     			</f:section>
+       			
+		</f:section>
+        
+        
+  </f:section>
+</j:jelly>
+
+
+

@@ -1,0 +1,65 @@
+## Fields used
+private boolean triggerQAJob;
+private TriggerType triggerType;
+private TriggerServer triggerServer;
+private String remoteJenkinsBaseUrl;	
+private String remoteUsername;
+private String remoteApiToken;
+private String defaultQaJob;    
+
+## Flow
+Check triggerQAJob
+	-> Yes 
+		Check triggerType
+			-> Commit Message
+				-> Check triggerServer
+					-> Same Server - Call SameJenkinsServer.java				
+					-> Remote Server - Call RemoteJenkinsServer.java - use remote details(url,username,apitoken)
+			
+			-> Controller File				
+				-> Check triggerServer
+					-> Same Server - Call SameJenkinsServer.java				
+					-> Remote Server - Call RemoteJenkinsServer.java - use remote details(url,username,apitoken)
+	
+	
+	-> No 
+		-> Message("No QA Job is triggered as the QA Trigger Job flag is disabled")
+		
+## Code Layout	
+if(this.triggerQAJob){
+	switch(this.triggerType){
+		case COMMIT_MESSAGE: {
+    		switch(this.triggerServer){
+    			case SAME_SERVER: {
+    					
+    				break;
+    			}
+    			
+    			case REMOTE_SERVER: {
+    				
+    				break;
+    			}
+    		}
+    		
+			break;
+		}
+		
+		case CONTROLLER_FILE: {
+    		switch(this.triggerServer){
+    			case SAME_SERVER: {
+    					
+    				break;
+    			}
+    			
+    			case REMOTE_SERVER: {
+    				
+    				break;
+    			}
+    		}                        		
+
+			break;
+		}
+	}
+} else{
+     		listener.getLogger().println("No QA Job is triggered as the QA Trigger Job flag is disabled");
+}

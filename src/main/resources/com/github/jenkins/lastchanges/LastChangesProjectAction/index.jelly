@@ -1,0 +1,41 @@
+<?jelly escape-by-default='false'?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:fmt="jelly:fmt" xmlns:l="/lib/layout">
+    <l:layout title="Last Changes of ${it.project.name}">
+
+
+        <l:main-panel>
+
+            <div class="row container-fluid pane-frame" style="text-align:center;width:70%">
+                <div class="row pane-header" >
+                    <span style="font-size:1.2em">View last changes published by builds</span>
+                </div>
+                <div class="row pane-content">
+                    <table class="pane">
+                        <tbody>
+                                <j:forEach items="${it.lastChangesBuilds}" var="build">
+                                    <tr class="build-row  single-line">
+                                        <td class="build-row-cell">
+                                        <a href="../${build.number}/change-based-job-trigger" target="_blank">Build #
+                                            ${build.number} (<fmt:formatDate value="${build.time}" type="both"/>)
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </j:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                
+                 <j:if test="${empty it.lastChangesBuilds}">
+                 	 <span style="font-size:1.1em">No changes published yet.</span>
+                 </j:if>
+            </div>
+
+
+        </l:main-panel>
+
+    </l:layout>
+
+</j:jelly>
+
+
+

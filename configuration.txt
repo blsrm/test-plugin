@@ -1,0 +1,9 @@
+LastChangesPublisher
+LastChangesConfig
+GetLastChangesPublisherStep
+
+private boolean triggerQAJob;
+private String qaJenkinsBaseUrl;
+private String defaultQaJob;
+
+boolean triggerQAJob, String qaJenkinsBaseUrl, String defaultQaJob
